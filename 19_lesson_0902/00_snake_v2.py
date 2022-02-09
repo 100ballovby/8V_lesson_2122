@@ -85,11 +85,20 @@ while not finished:
     x1 += x1_change
     y1 += y1_change
     screen.fill(WHITE)
-    rect(screen, BLUE, [x1, y1, snake_block, snake_block])
-    rect(screen, RED, [food_x, food_y, snake_block, snake_block])
+
+    snake_segment = []  # список, в котором лежат координаты сегмента
+    snake_segment.append(x1)
+    snake_segment.append(y1)
+    snake_list.append(snake_segment)  # добавляю сегмент к списку змеи
+
+    snake = draw_snake(snake_block, snake_list)
+    food = rect(screen, RED, [food_x, food_y, snake_block, snake_block])
     pg.display.update()
 
-    if x1 == food_x and y1 == food_y:
-        print('я поела')
+    if len(snake_list) > snake_length:  # если сегментов больше, чем длина змеи
+        snake_list.pop(0)  # удалить один сегмент
+
+    if snake.colliderect(food):  # если змея касается еды
+        snake_length += 1  # добавить 1 к длине змеи, чтобы она росла
         food_x = round(randrange(0, W - snake_block) / 10) * 10  # случайные координаты появления еды
         food_y = round(randrange(0, H - snake_block) / 10) * 10
