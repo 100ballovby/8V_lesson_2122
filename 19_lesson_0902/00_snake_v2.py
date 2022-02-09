@@ -112,7 +112,7 @@ def game_loop():  # главный игровой цикл
             snake_list.pop(0)  # удалить один сегмент
 
         for x in snake_list[:-1]:
-            if x == snake_block:
+            if x == snake_segment:
                 pause = True
 
         if snake.colliderect(food):  # если змея касается еды
